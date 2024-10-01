@@ -1,6 +1,7 @@
 import os
 import random 
 import sys
+import time
 import pygame as pg
 
 
@@ -52,7 +53,19 @@ def main():
         screen.blit(bg_img, [0, 0]) 
         if kk_rct.colliderect(bb_rct):  
             #こうかとんと爆弾が重なっていたら
-            print("GameOver")
+            
+            go=pg.Surface((WIDTH,HEIGHT))
+            pg.draw.rect(go,(0,0,0),pg.Rect(0,0,WIDTH,HEIGHT))
+            go.set_alpha(100)
+            screen.blit(go, [0, 0])
+            sad_koukaton=pg.image.load("fig/8.png")
+            sad_koukaton=pg.transform.rotozoom(sad_koukaton,0,2.0)
+            screen.blit(sad_koukaton,((WIDTH-sad_koukaton.get_width())//2,100))
+            font=pg.font.Font(None,80)
+            text=font.render("GAME OVER",True,(255,0,0))
+            screen.blit(text,((WIDTH-text.get_width())//2,400))
+            pg.display.update()
+            time.sleep(5)
             return 
 
         key_lst = pg.key.get_pressed()
