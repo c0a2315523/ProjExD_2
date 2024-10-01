@@ -36,6 +36,8 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
+    
+
     bb_img=pg.Surface((20,20))  #空のSurface
     bb_img.set_colorkey((0,0,0))  #爆弾の四隅を透過させる
     pg.draw.circle(bb_img,(255,0,0),(10,10),10)
@@ -51,8 +53,11 @@ def main():
             if event.type == pg.QUIT: 
                 return
         screen.blit(bg_img, [0, 0]) 
-        if kk_rct.colliderect(bb_rct):  
+        if kk_rct.colliderect(bb_rct): 
+
+
             #こうかとんと爆弾が重なっていたら
+
             
             go=pg.Surface((WIDTH,HEIGHT))
             pg.draw.rect(go,(0,0,0),pg.Rect(0,0,WIDTH,HEIGHT))
@@ -62,7 +67,7 @@ def main():
             sad_koukaton=pg.transform.rotozoom(sad_koukaton,0,2.0)
             screen.blit(sad_koukaton,((WIDTH-sad_koukaton.get_width())//2,100))
             font=pg.font.Font(None,80)
-            text=font.render("GAME OVER",True,(255,0,0))
+            text=font.render("GAME OVER",True,(0,0,255))
             screen.blit(text,((WIDTH-text.get_width())//2,400))
             pg.display.update()
             time.sleep(5)
@@ -86,6 +91,10 @@ def main():
         if check_bound(kk_rct)!=(True,True):
             kk_rct.move_ip(-sum_mv[0],-sum_mv[1])
         
+        """
+        壁判定結果が違ったら反転するようにします。
+        """
+
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip((vx,vy))
         yoko,tate=check_bound(bb_rct)
